@@ -1,0 +1,23 @@
+{
+    "sap cs": "TECH_SKILL",
+    "sap inegration": "TECH_SKILL",
+    "sap interface": "TECH_SKILL",
+    "sap abap": "TECH_SKILL",
+    "idoc": "TECH_SKILL",
+    "rfc": "TECH_SKILL",
+    "bapi": "TECH_SKILL",
+    "sap inteface": "TECH_SKILL",
+    "c": "TECH_SKILL",
+    "c++": "TECH_SKILL",
+    "5g": "TECH_SKILL",
+    "4g": "TECH_SKILL",
+    "3g protocols": "TECH_SKILL",
+    "3gpp architecture": "TECH_SKILL",
+    "docker": "TECH_SKILL",
+    "kubernetes": "TECH_SKILL",
+    "manufacturing  service": "TECH_SKILL",
+    "wireless software development": "TECH_SKILL",
+    "team player": "SOFT_SKILL",
+    "probelm solver": "SOFT_SKILL",
+    "good communication": "SOFT_SKILL"
+}

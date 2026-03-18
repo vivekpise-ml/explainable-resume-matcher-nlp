@@ -1,0 +1,8 @@
+spacy
+transformers
+torch
+pandas
+pymupdf
+python-docx
+scikit-learn
+tqdm
