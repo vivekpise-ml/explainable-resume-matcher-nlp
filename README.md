@@ -220,5 +220,28 @@ Data.csv
 •	manually label:
 o	match (0/1/2)
 o	remarks (VERY IMPORTANT)
+
+
+_____________________________________________
+
+What I have done:
+- Initial code made available
+- automatically created skill_dict.json (using python src/generate_skill.dict.py)
+- Have not compiled and run the entire workflow from main.py -- -This will be done after cleaning and updating the Data.csv, skill_dict.json, skill_graph.json, and adding resumes in data/raw folder by runnnig main.py. Folder I have not created yet - namely data/raw
+- data/raw, *.pdf, *.docx are kept in .gitignore.
+- JDs and resume, we will add the versioning using DVC - this also not done yet
 ________________________________________
+
+
+For git cloning.
+
+— Basic Git workflow
+
+git clone https://github.com/vivekpise-ml/explainable-resume-matcher-nlp
+git checkout -b feature-branch
+git add .
+git commit -m "feature added"
+git push origin feature-branch
+
+
 
