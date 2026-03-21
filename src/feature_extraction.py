@@ -49,7 +49,7 @@ def extract_structured_features(row):
 
     # Qualification
     features["qualification"] = str(
-        row.get("qulification", "")  # note: your column spelling
+        row.get("qualification", "")
     ).strip().lower()
 
     # Soft skills
