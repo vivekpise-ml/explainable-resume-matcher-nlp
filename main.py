@@ -11,8 +11,8 @@ from transformers import AutoTokenizer, AutoModelForSequenceClassification
 data_dir = "data/raw"
 skill_dict_path = "data/annotations/skill_dict.json"
 skill_graph_path = "data/annotations/skill_graph.json"
-model_name = "distilbert-base-uncased"
-
+# model_name = "distilbert-base-uncased"
+model_path = "models/matcher_model"
 
 # -----------------------------
 # Step 1: Load data
@@ -42,9 +42,11 @@ ner_model = load_ner_model()
 # -----------------------------
 # Step 5: Load transformer model
 # -----------------------------
-tokenizer = AutoTokenizer.from_pretrained(model_name)
+# tokenizer = AutoTokenizer.from_pretrained(model_name)
+tokenizer = AutoTokenizer.from_pretrained(model_path)
 matcher_model = AutoModelForSequenceClassification.from_pretrained(
-    model_name,
+    #model_name,
+    model_path,
     num_labels=2
 )
 

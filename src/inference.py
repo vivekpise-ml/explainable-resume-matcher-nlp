@@ -1,48 +1,44 @@
-'''
-def run_inference(resume_text, jd_text, ner_model, matcher_model, tokenizer):
-    
-    # Extract skills
-    doc_resume = ner_model(resume_text)
-    resume_skills = [ent.text.lower() for ent in doc_resume.ents]
-
-    doc_jd = ner_model(jd_text)
-    jd_skills = [ent.text.lower() for ent in doc_jd.ents]
-
-    # Match score
-    inputs = tokenizer(resume_text, jd_text, return_tensors="pt", truncation=True)
-    outputs = matcher_model(**inputs)
-    score = outputs.logits.softmax(dim=1)[0][1].item()
-
-    return resume_skills, jd_skills, score
-'''
-
 import torch
-from src.skill_extraction import load_skill_dict, extract_skills
+import json
+from src.skill_extraction import extract_skills
 from src.feature_extraction import extract_structured_features
 
 
 # -----------------------------
-# Optional: Load spaCy model
+# Load Models
 # -----------------------------
 def load_ner_model():
     try:
         import spacy
         return spacy.load("en_core_web_sm")
     except:
-        print("spaCy model not found. Running without NER support.")
+        print("spaCy model not found. Running without NER.")
         return None
 
-# ------------------------------
-# Loading skill graph
-#-------------------------------
+
 def load_skill_graph(path):
-    import json
     with open(path, "r") as f:
         return json.load(f)
 
 
 # -----------------------------
-# Add graph based matching function
+# Normalize Skill (IMPORTANT)
+# -----------------------------
+def normalize_skill(skill):
+    skill = skill.lower().strip()
+
+    mapping = {
+        "cpp": "c++",
+        "c plus plus": "c++",
+        "s4": "s4 hana",
+        "sap s4": "s4 hana"
+    }
+
+    return mapping.get(skill, skill)
+
+
+# -----------------------------
+# Graph-based Matching
 # -----------------------------
 def graph_based_match(jd_skills, resume_skills, skill_graph):
     matched = set()
@@ -52,42 +48,46 @@ def graph_based_match(jd_skills, resume_skills, skill_graph):
 
     for jd_skill in jd_skills:
 
-        # -----------------------------
-        # Direct Match
-        # -----------------------------
+        # Direct match
         if jd_skill in resume_set:
             matched.add(jd_skill)
             continue
 
-        # -----------------------------
-        # Graph Match
-        # -----------------------------
+        # Graph match
         if jd_skill in skill_graph:
-            related = skill_graph[jd_skill]
-
-            for rel_skill in related:
-                if rel_skill in resume_set:
+            for rel in skill_graph[jd_skill]:
+                if rel in resume_set:
                     matched.add(jd_skill)
-                    graph_matches[jd_skill] = rel_skill
+                    graph_matches[jd_skill] = rel
                     break
 
     return matched, graph_matches
 
 
 # -----------------------------
-# Main Inference Function
+# Final Scoring Function (VERY IMPORTANT)
 # -----------------------------
-'''
-def run_inference(
-    resume_text,
-    jd_text,
-    matcher_model,
-    tokenizer,
-    skill_dict,
-    ner_model=None,
-    row_data=None
-):
-'''
+def compute_final_score(transformer_score, matched, total_jd, graph_matches):
+
+    if total_jd == 0:
+        skill_score = 0
+    else:
+        skill_score = len(matched) / total_jd
+
+    graph_bonus = len(graph_matches) * 0.05
+
+    final_score = (
+        0.6 * transformer_score +
+        0.4 * skill_score +
+        graph_bonus
+    )
+
+    return min(final_score, 1.0), skill_score
+
+
+# -----------------------------
+# Main Inference
+# -----------------------------
 def run_inference(
     resume_text,
     jd_text,
@@ -98,8 +98,15 @@ def run_inference(
     ner_model=None,
     row_data=None
 ):
+
     # -----------------------------
-    # Skill Extraction (Hybrid)
+    # Safety check
+    # -----------------------------
+    if not resume_text.strip() or not jd_text.strip():
+        return {"error": "Empty resume or JD"}
+
+    # -----------------------------
+    # Skill Extraction
     # -----------------------------
     resume_tech, resume_soft = extract_skills(
         resume_text, skill_dict, ner_model
@@ -108,6 +115,10 @@ def run_inference(
     jd_tech, jd_soft = extract_skills(
         jd_text, skill_dict, ner_model
     )
+
+    # Normalize + Deduplicate
+    resume_tech = list(set([normalize_skill(s) for s in resume_tech]))
+    jd_tech = list(set([normalize_skill(s) for s in jd_tech]))
 
     # -----------------------------
     # Structured Features
@@ -131,20 +142,10 @@ def run_inference(
     with torch.no_grad():
         outputs = matcher_model(**inputs)
         probs = torch.softmax(outputs.logits, dim=1)
-        score = probs[0][1].item()
+        transformer_score = probs[0][1].item()
 
     # -----------------------------
-    # Skill Gap Analysis (basic)
-    # -----------------------------
-    
-    # matched_skills = list(set(resume_tech) & set(jd_tech))
-    # missing_skills = list(set(jd_tech) - set(resume_tech))
-
-    resume_tech = list(set(resume_tech)) # To remove duplicates using set
-    jd_tech = list(set(jd_tech)) # To remove duplicates using set
-
-    # -----------------------------
-    # Graph-based Skill Matching
+    # Graph-based Matching
     # -----------------------------
     matched_set, graph_matches = graph_based_match(
         jd_tech, resume_tech, skill_graph
@@ -152,14 +153,35 @@ def run_inference(
 
     missing_set = set(jd_tech) - matched_set
 
-    matched_skills = list(matched_set)
-    missing_skills = list(missing_set)
+    # -----------------------------
+    # Final Score
+    # -----------------------------
+    final_score, skill_score = compute_final_score(
+        transformer_score,
+        matched_set,
+        len(jd_tech),
+        graph_matches
+    )
 
     # -----------------------------
-    # Final Output
+    # Generate Remarks
+    # -----------------------------
+    remark = generate_remark(
+    matched_set,
+    missing_set,
+    graph_matches
+    )
+
+    # -----------------------------
+    # Output
     # -----------------------------
     return {
-        "match_score": round(score, 3),
+        "match_score": round(final_score, 3),
+
+        "scores": {
+            "transformer": round(transformer_score, 3),
+            "skill_match": round(skill_score, 3)
+        },
 
         "resume": {
             "tech_skills": resume_tech,
@@ -170,18 +192,38 @@ def run_inference(
             "tech_skills": jd_tech,
             "soft_skills": jd_soft
         },
-       
-       ''' 
+
         "skill_analysis": {
-             "matched": matched_skills,
-            "missing": missing_skills
-        },
-       '''
-        "skill_analysis": {
-             "matched": matched_skills,
-            "missing": missing_skills,
-            "graph_matches": graph_matches
+            "matched": list(matched_set),
+            "missing": list(missing_set),
+            "graph_matches": graph_matches,
+            "coverage": f"{len(matched_set)}/{len(jd_tech)}"
         },
 
+        "remark" : remark,
+        
         "features": structured_features
     }
+
+# -------------------------------------------
+#  Function to generate explainable Remarks
+# -------------------------------------------
+def generate_remark(matched, missing, graph_matches):
+
+    if len(matched) == 0:
+        return "Candidate does not match the job requirements."
+
+    remark = []
+
+    if len(matched) > 0:
+        remark.append(f"Matches {len(matched)} required skills")
+
+    if len(graph_matches) > 0:
+        gm = ", ".join([f"{k} via {v}" for k, v in graph_matches.items()])
+        remark.append(f"Indirect matches found ({gm})")
+
+    if len(missing) > 0:
+        miss = ", ".join(missing[:5])  # limit output
+        remark.append(f"Missing key skills: {miss}")
+
+    return ". ".join(remark)
