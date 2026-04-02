@@ -1,6 +1,6 @@
 {
     "sap cs": "TECH_SKILL",
-    "sap inegration": "TECH_SKILL",
+    "sap integration": "TECH_SKILL",
     "sap interface": "TECH_SKILL",
     "sap abap": "TECH_SKILL",
     "abap oo" : "TECH_SKILL",
@@ -8,7 +8,6 @@
     "webservice" : "TECH_SKILL",
     "rfc": "TECH_SKILL",
     "bapi": "TECH_SKILL",
-    "sap inteface": "TECH_SKILL",
     "c": "TECH_SKILL",
     "c++": "TECH_SKILL",
     "5g": "TECH_SKILL",
@@ -17,7 +16,7 @@
     "3gpp architecture": "TECH_SKILL",
     "docker": "TECH_SKILL",
     "kubernetes": "TECH_SKILL",
-    "manufacturing  service": "TECH_SKILL",
+    "manufacturing service": "TECH_SKILL",
     "wireless software development": "TECH_SKILL",
     "abap": "TECH_SKILL",
     "sql": "TECH_SKILL",
@@ -93,6 +92,6 @@
     "uat" : "TECH_SKILL",
     "integration testing" : "TECH_SKILL",
     "team player": "SOFT_SKILL",
-    "probelm solver": "SOFT_SKILL",
+    "problem solver": "SOFT_SKILL",
     "good communication": "SOFT_SKILL"
 }

@@ -32,10 +32,52 @@ def load_ner_model():
         print("spaCy model not found. Running without NER support.")
         return None
 
+# ------------------------------
+# Loading skill graph
+#-------------------------------
+def load_skill_graph(path):
+    import json
+    with open(path, "r") as f:
+        return json.load(f)
+
+
+# -----------------------------
+# Add graph based matching function
+# -----------------------------
+def graph_based_match(jd_skills, resume_skills, skill_graph):
+    matched = set()
+    graph_matches = {}
+
+    resume_set = set(resume_skills)
+
+    for jd_skill in jd_skills:
+
+        # -----------------------------
+        # Direct Match
+        # -----------------------------
+        if jd_skill in resume_set:
+            matched.add(jd_skill)
+            continue
+
+        # -----------------------------
+        # Graph Match
+        # -----------------------------
+        if jd_skill in skill_graph:
+            related = skill_graph[jd_skill]
+
+            for rel_skill in related:
+                if rel_skill in resume_set:
+                    matched.add(jd_skill)
+                    graph_matches[jd_skill] = rel_skill
+                    break
+
+    return matched, graph_matches
+
 
 # -----------------------------
 # Main Inference Function
 # -----------------------------
+'''
 def run_inference(
     resume_text,
     jd_text,
@@ -45,7 +87,17 @@ def run_inference(
     ner_model=None,
     row_data=None
 ):
-    
+'''
+def run_inference(
+    resume_text,
+    jd_text,
+    matcher_model,
+    tokenizer,
+    skill_dict,
+    skill_graph,
+    ner_model=None,
+    row_data=None
+):
     # -----------------------------
     # Skill Extraction (Hybrid)
     # -----------------------------
@@ -84,8 +136,24 @@ def run_inference(
     # -----------------------------
     # Skill Gap Analysis (basic)
     # -----------------------------
-    matched_skills = list(set(resume_tech) & set(jd_tech))
-    missing_skills = list(set(jd_tech) - set(resume_tech))
+    
+    # matched_skills = list(set(resume_tech) & set(jd_tech))
+    # missing_skills = list(set(jd_tech) - set(resume_tech))
+
+    resume_tech = list(set(resume_tech)) # To remove duplicates using set
+    jd_tech = list(set(jd_tech)) # To remove duplicates using set
+
+    # -----------------------------
+    # Graph-based Skill Matching
+    # -----------------------------
+    matched_set, graph_matches = graph_based_match(
+        jd_tech, resume_tech, skill_graph
+    )
+
+    missing_set = set(jd_tech) - matched_set
+
+    matched_skills = list(matched_set)
+    missing_skills = list(missing_set)
 
     # -----------------------------
     # Final Output
@@ -102,10 +170,17 @@ def run_inference(
             "tech_skills": jd_tech,
             "soft_skills": jd_soft
         },
-
+       
+       ''' 
         "skill_analysis": {
-            "matched": matched_skills,
+             "matched": matched_skills,
             "missing": missing_skills
+        },
+       '''
+        "skill_analysis": {
+             "matched": matched_skills,
+            "missing": missing_skills,
+            "graph_matches": graph_matches
         },
 
         "features": structured_features

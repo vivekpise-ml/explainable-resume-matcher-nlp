@@ -1,0 +1,116 @@
+{
+  "sap": [
+    "sap abap",
+    "sap mm",
+    "sap pm",
+    "sap eam",
+    "sap fico",
+    "sap wcm",
+    "sap dms",
+    "sap cs",
+    "sap bpm",
+    "sap pi",
+    "sap btp"
+  ],
+
+  "sap abap": [
+    "abap",
+    "abap oo",
+    "badi",
+    "cds views",
+    "amdp",
+    "data dictionary",
+    "module pool programming",
+    "dialog programming",
+    "alv",
+    "smartforms",
+    "sap debugging"
+  ],
+
+  "sap integration": [
+    "idoc",
+    "rfc",
+    "bapi",
+    "edi",
+    "ale",
+    "sap pi",
+    "cpi",
+    "hci",
+    "rest",
+    "soap",
+    "apis"
+  ],
+
+  "sap s4 hana": [
+    "s4 hana",
+    "fiori",
+    "ui5",
+    "odata",
+    "ltmc",
+    "ltmom",
+    "rap model"
+  ],
+
+  "sap migration": [
+    "ltmc",
+    "lsmw",
+    "bdc"
+  ],
+
+  "sap pm": [
+    "plant maintenance",
+    "preventive maintenance",
+    "breakdown maintenance"
+  ],
+
+  "sap security": [
+    "sap security configuration",
+    "oauth2 authentication",
+    "ssh",
+    "client certificate management",
+    "keystore management"
+  ],
+
+  "web technologies": [
+    "json",
+    "xml",
+    "xsd",
+    "wsdl",
+    "webservice"
+  ],
+
+  "cloud": [
+    "aws"
+  ],
+
+  "containerization": [
+    "docker",
+    "kubernetes"
+  ],
+
+  "wireless": [
+    "5g",
+    "4g",
+    "3g protocols",
+    "3gpp architecture"
+  ],
+
+  "programming": [
+    "python",
+    "c",
+    "c++",
+    "sql"
+  ],
+
+  "testing": [
+    "functional testing",
+    "integration testing",
+    "uat"
+  ],
+
+  "enterprise systems": [
+    "plm",
+    "pim",
+    "scada"
+  ]
+}
