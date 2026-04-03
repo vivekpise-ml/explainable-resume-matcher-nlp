@@ -11,6 +11,11 @@ def create_pairs(data_dir, label_map):
     pairs = []
 
     for jd_folder in os.listdir(data_dir):
+
+        # skip hidden/system folders
+        if jd_folder.startswith("."):
+            continue
+
         folder_path = os.path.join(data_dir, jd_folder)
 
         if not os.path.isdir(folder_path):
