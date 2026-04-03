@@ -1,5 +1,11 @@
 import os
-from text_extractor import extract_text
+#from text_extractor import extract_text
+from src.text_extractor import extract_text
+
+def normalize_filename(name):
+    name = str(name).strip().lower()
+    name = name.replace(".pdf", "").replace(".docx", "")
+    return name
 
 def create_pairs(data_dir, label_map):
     pairs = []
@@ -39,8 +45,13 @@ def create_pairs(data_dir, label_map):
 
             resume_text = extract_text(os.path.join(folder_path, f))
 
-            key = (jd_folder.lower(), f.lower())
+            #key = (jd_folder.lower(), f.lower())
+            key = (jd_folder.lower(), normalize_filename(f))
             label = label_map.get(key, None)
+
+            if key not in label_map:
+                print("❌ No label for:", key)
+                continue
 
             if label is None:
                 continue
@@ -56,7 +67,12 @@ def create_pairs(data_dir, label_map):
 import pandas as pd
 
 def load_labels(csv_path):
-    df = pd.read_csv(csv_path, header=1)
+    df = pd.read_csv(csv_path, header=2)
+
+    '''
+    # For debugging
+    print("Columns in CSV:", df.columns.tolist())
+    '''
 
     # Normalize column names
     df.columns = [c.strip().lower() for c in df.columns]
@@ -65,9 +81,14 @@ def load_labels(csv_path):
 
     for _, row in df.iterrows():
         jd = str(row["jd title ( folder name)"]).strip().lower()
-        resume = str(row["resume files"]).strip().lower()
+        #resume = str(row["resume files"]).strip().lower()
+        resume = normalize_filename(row["resume files"])
         score = float(row["matching score"])
 
+        '''
+        # For training experimentation following is commented. Will 
+        # uncomment once more samples we get
+        '''       
         # Convert score → label
         if score <= 25:
             label = 0
@@ -77,6 +98,13 @@ def load_labels(csv_path):
             label = 2
         else:
             label = 3
+                 
+        '''
+        if score >= 50:
+            label = 1
+        else:
+            label = 0
+        '''
 
         key = (jd, resume)
         label_map[key] = label

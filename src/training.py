@@ -11,7 +11,8 @@ from src.matcher_training import ResumeJDDataset
 # Config
 # -----------------------------
 data_dir = "data/raw"
-csv_path = "data/Data.csv"
+#csv_path = "data/Data.csv"
+csv_path = "data/updated_Data.csv"
 model_name = "bert-base-uncased"
 
 
@@ -20,6 +21,8 @@ model_name = "bert-base-uncased"
 # -----------------------------
 label_map = load_labels(csv_path)
 pairs = create_pairs(data_dir, label_map)
+
+print("Sample label_map keys:", list(label_map.keys())[:5])
 
 print("Total samples:", len(pairs))
 
@@ -64,10 +67,25 @@ def compute_metrics(eval_pred):
 # -----------------------------
 # Training Arguments
 # -----------------------------
+'''
+# This is with older Transformer version like below 4.8
 training_args = TrainingArguments(
     output_dir="models/",
     evaluation_strategy="epoch",
     save_strategy="epoch",
+    learning_rate=2e-5,
+    per_device_train_batch_size=4,
+    per_device_eval_batch_size=4,
+    num_train_epochs=3,
+    logging_dir="logs/",
+)
+'''
+
+# for new transformer version which I have is 5.3.0
+training_args = TrainingArguments(
+    output_dir="models/",
+    do_train=True,
+    do_eval=True,
     learning_rate=2e-5,
     per_device_train_batch_size=4,
     per_device_eval_batch_size=4,
@@ -79,6 +97,8 @@ training_args = TrainingArguments(
 # -----------------------------
 # Trainer
 # -----------------------------
+'''
+# This is oder version of transformer
 trainer = Trainer(
     model=model,
     args=training_args,
@@ -87,7 +107,16 @@ trainer = Trainer(
     tokenizer=tokenizer,
     compute_metrics=compute_metrics
 )
+'''
 
+# For 5.x transformer the correct function call is as below
+trainer = Trainer(
+    model=model,
+    args=training_args,
+    train_dataset=train_dataset,
+    eval_dataset=test_dataset,
+    compute_metrics=compute_metrics
+)
 
 # -----------------------------
 # Train

@@ -4,3 +4,7 @@ data/raw/
 __pycache__/
 *.pyc
 .env
+src/rough_for_percent_to_number.py
+data/backup-orig
+data/orig_Data.csv
+models
