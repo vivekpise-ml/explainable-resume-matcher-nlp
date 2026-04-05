@@ -26,11 +26,27 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 # -----------------------------
 # Load data
 # -----------------------------
+'''
 label_map = load_labels("data/updated_Data.csv")
 pairs = create_pairs("data/raw", label_map)
+'''
 
+import os
 
-print(pairs[0].keys()) # For debugging
+# Get project root (2 levels up from src/training.py)
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+data_dir = os.path.join(BASE_DIR, "data", "raw")
+csv_path = os.path.join(BASE_DIR, "data", "updated_Data.csv")
+
+print("BASE_DIR:", BASE_DIR)
+print("DATA_DIR:", data_dir)
+print("Exists:", os.path.exists(data_dir))
+
+label_map = load_labels(csv_path)
+pairs = create_pairs(data_dir, label_map)
+
+# print(pairs[0].keys()) # For debugging
 
 train_pairs, test_pairs = train_test_split(pairs, test_size=0.2, random_state=42)
 
