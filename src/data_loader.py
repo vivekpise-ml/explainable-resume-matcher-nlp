@@ -97,7 +97,19 @@ def create_pairs(data_dir, label_map):
         # -----------------------------
         # Locate JD folder
         # -----------------------------
-        jd_folder = os.path.join(data_dir, jd_id)
+        
+        #jd_folder = os.path.join(data_dir, jd_id)
+
+        jd_folder = None
+
+        for folder in os.listdir(data_dir):
+            if folder.lower() == jd_id.lower():
+                jd_folder = os.path.join(data_dir, folder)
+                break
+
+        if jd_folder is None:
+            print(f"[WARN] JD folder not found: {jd_id}")
+            continue
 
         if not os.path.exists(jd_folder):
             print(f"[WARN] JD folder not found: {jd_folder}")
