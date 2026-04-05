@@ -6,3 +6,4 @@ pymupdf
 python-docx
 scikit-learn
 tqdm
+pdfplumber

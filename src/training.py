@@ -1,154 +1,156 @@
 import torch
-from transformers import BertTokenizer, BertForSequenceClassification, Trainer, TrainingArguments
+import torch.nn as nn
+from torch.utils.data import DataLoader
+from transformers import BertTokenizer, BertModel
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score, f1_score
+from sklearn.metrics import accuracy_score, f1_score, classification_report
 
 from src.data_loader import create_pairs, load_labels
 from src.matcher_training import ResumeJDDataset
 
+import json
+
+# =========================================================
+# 🔴 HOOKS
+# =========================================================
+USE_BERT = True   # 🔥 turn OFF to test only structured features
 
 # -----------------------------
 # Config
 # -----------------------------
-data_dir = "data/raw"
-#csv_path = "data/Data.csv"
-csv_path = "data/updated_Data.csv"
 model_name = "bert-base-uncased"
-
-
-# -----------------------------
-# Load labels + pairs
-# -----------------------------
-label_map = load_labels(csv_path)
-pairs = create_pairs(data_dir, label_map)
-
-print("Sample label_map keys:", list(label_map.keys())[:5])
-
-print("Total samples:", len(pairs))
-
+batch_size = 4
+epochs = 3
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # -----------------------------
-# Train/Test split
+# Load data
 # -----------------------------
+label_map = load_labels("data/updated_Data.csv")
+pairs = create_pairs("data/raw", label_map)
+
+
+print(pairs[0].keys()) # For debugging
+
 train_pairs, test_pairs = train_test_split(pairs, test_size=0.2, random_state=42)
 
-
 # -----------------------------
-# Tokenizer + Dataset
+# Tokenizer
 # -----------------------------
 tokenizer = BertTokenizer.from_pretrained(model_name)
 
-train_dataset = ResumeJDDataset(train_pairs, tokenizer)
-test_dataset = ResumeJDDataset(test_pairs, tokenizer)
+# -----------------------------
+# Load skill files
+# -----------------------------
+with open("data/annotations/skill_dict.json") as f:
+    skill_dict = json.load(f)
 
+with open("data/annotations/skill_graph.json") as f:
+    skill_graph = json.load(f)
+
+# -----------------------------
+# Dataset
+# -----------------------------
+train_dataset = ResumeJDDataset(train_pairs, tokenizer, skill_dict, skill_graph)
+test_dataset = ResumeJDDataset(test_pairs, tokenizer, skill_dict, skill_graph)
+
+train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
+test_loader = DataLoader(test_dataset, batch_size=batch_size)
+
+# -----------------------------
+# Get feature size dynamically
+# -----------------------------
+sample = next(iter(train_loader))
+extra_dim = sample['extra_features'].shape[1]
 
 # -----------------------------
 # Model
 # -----------------------------
-model = BertForSequenceClassification.from_pretrained(
-    model_name,
-    num_labels=4
-)
+class HybridModel(nn.Module):
+    def __init__(self, extra_dim, num_labels):
+        super().__init__()
+
+        if USE_BERT:
+            self.bert = BertModel.from_pretrained(model_name)
+            input_dim = 768 + extra_dim
+        else:
+            self.bert = None
+            input_dim = extra_dim
+
+        self.classifier = nn.Sequential(
+            nn.Linear(input_dim, 256),
+            nn.ReLU(),
+            nn.Linear(256, num_labels)
+        )
+
+    def forward(self, input_ids, attention_mask, extra_features):
+
+        if USE_BERT:
+            outputs = self.bert(input_ids=input_ids, attention_mask=attention_mask)
+            cls = outputs.last_hidden_state[:, 0, :]
+            combined = torch.cat((cls, extra_features), dim=1)
+        else:
+            combined = extra_features
+
+        return self.classifier(combined)
 
 
-# -----------------------------
-# Metrics
-# -----------------------------
-def compute_metrics(eval_pred):
-    logits, labels = eval_pred
-    preds = logits.argmax(axis=1)
-
-    acc = accuracy_score(labels, preds)
-    f1 = f1_score(labels, preds, average="weighted")
-
-    return {"accuracy": acc, "f1": f1}
-
-
-# -----------------------------
-# Training Arguments
-# -----------------------------
-'''
-# This is with older Transformer version like below 4.8
-training_args = TrainingArguments(
-    output_dir="models/",
-    evaluation_strategy="epoch",
-    save_strategy="epoch",
-    learning_rate=2e-5,
-    per_device_train_batch_size=4,
-    per_device_eval_batch_size=4,
-    num_train_epochs=3,
-    logging_dir="logs/",
-)
-'''
-
-# for new transformer version which I have is 5.3.0
-training_args = TrainingArguments(
-    output_dir="models/",
-    do_train=True,
-    do_eval=True,
-    learning_rate=2e-5,
-    per_device_train_batch_size=4,
-    per_device_eval_batch_size=4,
-    num_train_epochs=3,
-    logging_dir="logs/",
-)
-
+model = HybridModel(extra_dim, num_labels=4).to(device)
 
 # -----------------------------
-# Trainer
+# Training
 # -----------------------------
-'''
-# This is oder version of transformer
-trainer = Trainer(
-    model=model,
-    args=training_args,
-    train_dataset=train_dataset,
-    eval_dataset=test_dataset,
-    tokenizer=tokenizer,
-    compute_metrics=compute_metrics
-)
-'''
+optimizer = torch.optim.AdamW(model.parameters(), lr=2e-5)
+criterion = nn.CrossEntropyLoss()
 
-# For 5.x transformer the correct function call is as below
-trainer = Trainer(
-    model=model,
-    args=training_args,
-    train_dataset=train_dataset,
-    eval_dataset=test_dataset,
-    compute_metrics=compute_metrics
-)
+for epoch in range(epochs):
+    model.train()
+    total_loss = 0
 
-# -----------------------------
-# Train
-# -----------------------------
-trainer.train()
+    for batch in train_loader:
+        optimizer.zero_grad()
 
+        input_ids = batch['input_ids'].to(device)
+        attention_mask = batch['attention_mask'].to(device)
+        extra_features = batch['extra_features'].to(device)
+        labels = batch['labels'].to(device)
+
+        outputs = model(input_ids, attention_mask, extra_features)
+        loss = criterion(outputs, labels)
+
+        loss.backward()
+        optimizer.step()
+
+        total_loss += loss.item()
+
+    print(f"Epoch {epoch+1}, Loss: {total_loss:.4f}")
 
 # -----------------------------
-# Evaluate
+# Evaluation
 # -----------------------------
-results = trainer.evaluate()
-print("Evaluation:", results)
+model.eval()
+all_preds, all_labels = [], []
 
+with torch.no_grad():
+    for batch in test_loader:
+        input_ids = batch['input_ids'].to(device)
+        attention_mask = batch['attention_mask'].to(device)
+        extra_features = batch['extra_features'].to(device)
+        labels = batch['labels'].to(device)
+
+        outputs = model(input_ids, attention_mask, extra_features)
+        preds = torch.argmax(outputs, dim=1)
+
+        all_preds.extend(preds.cpu().numpy())
+        all_labels.extend(labels.cpu().numpy())
+
+print("\nAccuracy:", accuracy_score(all_labels, all_preds))
+print("F1:", f1_score(all_labels, all_preds, average="weighted"))
+
+print("\nDetailed Report:\n")
+print(classification_report(all_labels, all_preds))
 
 # -----------------------------
 # Save model
 # -----------------------------
-trainer.save_model("models/matcher_model")
-tokenizer.save_pretrained("models/matcher_model")
-
-# -----------------------------
-# Optionally can call the classification_report in evaluate.py
-#   This prediction otherwise is already happening 
-#   in compute_metrics() 
-#  THIS IS OPTIONAL (but by default still called)
-# -----------------------------
-from sklearn.metrics import classification_report
-
-predictions = trainer.predict(test_dataset)
-
-y_true = predictions.label_ids
-y_pred = predictions.predictions.argmax(axis=1)
-
-print("\nDetailed Report:\n")
-print(classification_report(y_true, y_pred))
+torch.save(model.state_dict(), "models/hybrid_model.pt")
