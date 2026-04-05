@@ -71,7 +71,7 @@ def load_labels(csv_path):
         else:
             label = 0
 
-        print("Sample labels:", list(label_map.values())[:5]) # For debugging
+        #print("Sample labels:", list(label_map.values())[:5]) # For debugging
 
         label_map[(resume_id, jd_id)] = {
             "label": int(label) if not pd.isna(label) else 0,
