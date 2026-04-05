@@ -7,9 +7,9 @@ import math
 # 🔴 HOOKS (toggle easily for experiments)
 # =========================================================
 USE_DYNAMIC_SKILLS = True      # skill_dict + skill_graph
-USE_CSV_FEATURES = False        # CSV scores
-USE_EXPERIENCE = True
-USE_QUALIFICATION = True
+#USE_CSV_FEATURES = False        # CSV scores
+#USE_EXPERIENCE = True
+#USE_QUALIFICATION = True
 
 
 # -----------------------------
@@ -82,12 +82,26 @@ def compute_features(item, skill_dict, skill_graph):
         match_ratio = matched = missing = required = 0.0
 
     # -----------------------------
-    # CSV features (with fallback)
+    # CSV skills (clean handling)
     # -----------------------------
-    skill_score, skill_missing = safe_value(item.get('skill_score'), match_ratio)
+    skill_score = item.get('skill_score')
+    skill_score = 0.0 if skill_score is None else skill_score / 100  # normalize
+    skill_missing = 1 if skill_score is None else 0
 
-    exp_csv, exp_missing = safe_value(item.get('experience_score'), extract_experience(resume))
-    qual_csv, qual_missing = safe_value(item.get('qualification_score'), 0.0)
+    
+    # -----------------------------
+    # CSV features - qualification and experience
+    #-------------------------------
+    #exp_csv, exp_missing = safe_value(item.get('experience_score'), extract_experience(resume))
+    #qual_csv, qual_missing = safe_value(item.get('qualification_score'), 0.0)
+
+    exp_csv = item.get('experience_score')
+    exp_missing = 1 if exp_csv is None else 0
+    exp_csv = 0.0 if exp_csv is None else exp_csv / 100
+
+    qual_csv = item.get('qualification_score')
+    qual_missing = 1 if qual_csv is None else 0
+    qual_csv = 0.0 if qual_csv is None else qual_csv / 100
 
     # -----------------------------
     # Optional weighting (simple static fallback)
@@ -104,20 +118,20 @@ def compute_features(item, skill_dict, skill_graph):
     if USE_DYNAMIC_SKILLS:
         features += [
             match_ratio,
-            matched / 20,
-            missing / 20,
-            required / 20
+            matched / (required + 1e-5),   # better normalization,
+            missing / (required + 1e-5),
+            required / 20  # optional max requirements cap of 20 in JD
         ]
+    else:
+        features += [0.0, 0.0, 0.0]
 
-    # CSV
-    if USE_CSV_FEATURES:
-        features.append(skill_score)
+    # CSV features
+    
+    features.append(skill_score)
 
-    if USE_EXPERIENCE:
-        features.append(exp_csv * EXP_WEIGHT)
+    features.append(exp_csv * EXP_WEIGHT)
 
-    if USE_QUALIFICATION:
-        features.append(qual_csv * QUAL_WEIGHT)
+    features.append(qual_csv * QUAL_WEIGHT)
 
     # Missing flags (VERY important)
     features += [skill_missing, exp_missing, qual_missing]
