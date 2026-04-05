@@ -7,7 +7,7 @@ import math
 # 🔴 HOOKS (toggle easily for experiments)
 # =========================================================
 USE_DYNAMIC_SKILLS = True      # skill_dict + skill_graph
-USE_CSV_FEATURES = True        # CSV scores
+USE_CSV_FEATURES = False        # CSV scores
 USE_EXPERIENCE = True
 USE_QUALIFICATION = True
 
