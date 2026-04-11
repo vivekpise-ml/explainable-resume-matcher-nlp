@@ -8,3 +8,5 @@ src/rough_for_percent_to_number.py
 data/backup-orig
 data/orig_Data.csv
 models
+data/annotations/backup-annotations
+*.zip

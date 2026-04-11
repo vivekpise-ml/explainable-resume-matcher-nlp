@@ -58,6 +58,10 @@ def compute_features(item, skill_dict, skill_graph):
     resume = item['resume']
     jd = item['jd']
 
+    # for debugging
+    #print("USE_CSV_FEATURES:", USE_CSV_FEATURES)
+    #print("RAW skill from item:", item.get('skill_score'))
+
     # -----------------------------
     # Dynamic skill features
     # -----------------------------
@@ -74,16 +78,12 @@ def compute_features(item, skill_dict, skill_graph):
             if s not in exact and is_related(s, resume_skills, skill_graph):
                 related.add(s)
 
-        exact_count = len(exact)
-        related_count = len(related)
-
-        matched = exact_count + related_count
+        matched = len(exact) + len(related)
         missing = required - matched
 
+        match_ratio = matched / required if required > 0 else 0.0
     else:
-        resume_skills = set()
-        jd_skills = set()
-        exact_count = related_count = matched = missing = required = 0.0
+        match_ratio = matched = missing = required = 0.0
 
     # -----------------------------
     # CSV skills (clean handling)
@@ -95,7 +95,7 @@ def compute_features(item, skill_dict, skill_graph):
     else:
         skill_score = 0.0
         skill_missing = 1
-
+    
     # -----------------------------
     # CSV features - qualification and experience
     #-------------------------------
@@ -119,59 +119,28 @@ def compute_features(item, skill_dict, skill_graph):
     # -----------------------------
     # Build feature vector
     # -----------------------------
-    feature_dict = {}
+    feature_dict = {} # changing to dictionary from list to show the features
 
+    # Dynamic
     if USE_DYNAMIC_SKILLS:
-
-        # ----------- CORE MATCH FEATURES -----------
-        feature_dict["exact_ratio"] = exact_count / (required + 1e-5)
-        #feature_dict["exact_count_norm"] = exact_count / 10
-
-        feature_dict["related_ratio"] = related_count / (required + 1e-5)
-        #feature_dict["related_count_norm"] = related_count / 10
-
-        feature_dict["coverage_ratio"] = matched / (required + 1e-5)
-        #feature_dict["missing_ratio"] = missing / (required + 1e-5)
-
-        # ----------- STRUCTURE FEATURES -----------
-        feature_dict["resume_skill_count_norm"] = len(resume_skills) / 20
-        feature_dict["jd_skill_count_norm"] = required / 20
-
-        
-        ratio = exact_count / (related_count + 1e-5)
-
-        # log compression (key fix)
-        feature_dict["exact_vs_related"] = math.log1p(ratio)/2.0
-        
-        feature_dict["match_density"] = matched / (len(resume_skills) + 1e-5)
-
-        #feature_dict["jd_unmatched_pressure"] = missing / (required + 1e-5)
-
-        feature_dict["balance_score"] = (
-            min(exact_count, related_count) / (max(exact_count, related_count) + 1e-5)
-        )
-
+        feature_dict["match_ratio"] = match_ratio
+        #feature_dict["matched_ratio"] = matched / (required + 1e-5)
+        feature_dict["missing_ratio"] = missing / (required + 1e-5)
+        feature_dict["required_norm"] = required / 20
     else:
-        # fallback zeros
-        for key in [
-            "exact_ratio", 
-            "related_ratio", 
-            "coverage_ratio", 
-            "resume_skill_count_norm", "jd_skill_count_norm",
-            "exact_vs_related", "match_density"
-        ]:
-            feature_dict[key] = 0.0
+        feature_dict["match_ratio"] = 0.0
+        feature_dict["matched_ratio"] = 0.0
+        feature_dict["missing_ratio"] = 0.0
+        feature_dict["required_norm"] = 0.0
+    
 
-
-    # -----------------------------
+    
     # CSV features
-    # -----------------------------
     if USE_CSV_FEATURES:
-
+    
         feature_dict["skill_score"] = skill_score
         feature_dict["exp_score"] = exp_csv * EXP_WEIGHT
         feature_dict["qual_score"] = qual_csv * QUAL_WEIGHT
-
     '''
     else:
         feature_dict["skill_score"] = 0.0
@@ -186,15 +155,9 @@ def compute_features(item, skill_dict, skill_graph):
         feature_dict["qual_missing"] = qual_missing
 
     # -----------------------------
-    # Convert to tensor
+    # Convert to list (ordered)
     # -----------------------------
-    features = torch.tensor(list(feature_dict.values()), dtype=torch.float)
-
-    # -----------------------------
-    # 🔥 NORMALIZATION (CRITICAL)
-    # -----------------------------
-    if features.numel() > 0:
-        features = (features - features.mean()) / (features.std() + 1e-6)
+    features = list(feature_dict.values())
 
     '''
     # -----------------------------
@@ -202,11 +165,11 @@ def compute_features(item, skill_dict, skill_graph):
     # -----------------------------
     print("\n===== FEATURE DEBUG =====")
     for k, v in feature_dict.items():
-        print(f"{k:25s}: {v}")
+        print(f"{k:20s}: {v}")
     print("=========================\n")
     '''
 
-    return features
+    return torch.tensor(features, dtype=torch.float)
 
 
 # -----------------------------
@@ -234,6 +197,7 @@ class ResumeJDDataset(Dataset):
             return_tensors='pt'
         )
 
+        
         extra_features = compute_features(item, self.skill_dict, self.skill_graph)
 
         return {

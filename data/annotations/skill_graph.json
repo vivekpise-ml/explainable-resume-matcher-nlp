@@ -1,18 +1,4 @@
 {
-  "sap": [
-    "sap abap",
-    "sap mm",
-    "sap pm",
-    "sap eam",
-    "sap fico",
-    "sap wcm",
-    "sap dms",
-    "sap cs",
-    "sap bpm",
-    "sap pi",
-    "sap btp"
-  ],
-
   "sap abap": [
     "abap",
     "abap oo",
@@ -42,19 +28,18 @@
   ],
 
   "sap s4 hana": [
-    "s4 hana",
     "fiori",
     "ui5",
     "odata",
+    "rap model",
     "ltmc",
-    "ltmom",
-    "rap model"
+    "ltmom"
   ],
 
   "sap migration": [
-    "ltmc",
     "lsmw",
-    "bdc"
+    "bdc",
+    "ltmc"
   ],
 
   "sap pm": [
@@ -79,6 +64,13 @@
     "webservice"
   ],
 
+  "programming": [
+    "python",
+    "c",
+    "c++",
+    "sql"
+  ],
+
   "cloud": [
     "aws"
   ],
@@ -93,13 +85,6 @@
     "4g",
     "3g protocols",
     "3gpp architecture"
-  ],
-
-  "programming": [
-    "python",
-    "c",
-    "c++",
-    "sql"
   ],
 
   "testing": [
