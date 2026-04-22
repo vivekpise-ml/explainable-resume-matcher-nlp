@@ -1,229 +1,182 @@
 import torch
 import json
+
+from transformers import BertTokenizer
+
+from src.matcher_training import compute_features
 from src.skill_extraction import extract_skills
-from src.feature_extraction import extract_structured_features
+from src.training import HybridModel  # IMPORTANT
 
 
 # -----------------------------
-# Load Models
+# Config
 # -----------------------------
-def load_ner_model():
-    try:
-        import spacy
-        return spacy.load("en_core_web_sm")
-    except:
-        print("spaCy model not found. Running without NER.")
-        return None
+MODEL_PATH = "models/hybrid_model.pt"
+DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
-def load_skill_graph(path):
+# -----------------------------
+# Load skill files
+# -----------------------------
+def load_json(path):
     with open(path, "r") as f:
         return json.load(f)
 
 
 # -----------------------------
-# Normalize Skill (IMPORTANT)
+# Load model
 # -----------------------------
-def normalize_skill(skill):
-    skill = skill.lower().strip()
+def load_model(skill_dict, skill_graph):
+    tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
 
-    mapping = {
-        "cpp": "c++",
-        "c plus plus": "c++",
-        "s4": "s4 hana",
-        "sap s4": "s4 hana"
+    # 🔥 Compute feature dimension dynamically
+    dummy_item = {
+        "resume": "dummy resume",
+        "jd": "dummy jd",
+        "skill_score": None,
+        "experience_score": None,
+        "qualification_score": None
     }
 
-    return mapping.get(skill, skill)
+    dummy_features = compute_features(dummy_item, skill_dict, skill_graph)
+    extra_dim = dummy_features.shape[0]
+
+    model = HybridModel(extra_dim=extra_dim, num_labels=4)
+    model.load_state_dict(torch.load(MODEL_PATH, map_location=DEVICE))
+
+    model.to(DEVICE)
+    model.eval()
+
+    return model, tokenizer
 
 
 # -----------------------------
-# Graph-based Matching
+# Predict function
 # -----------------------------
-def graph_based_match(jd_skills, resume_skills, skill_graph):
-    matched = set()
-    graph_matches = {}
+def predict(
+    resume_text,
+    jd_text,
+    model,
+    tokenizer,
+    skill_dict,
+    skill_graph
+):
+    item = {
+        "resume": resume_text,
+        "jd": jd_text,
+        "skill_score": None,
+        "experience_score": None,
+        "qualification_score": None
+    }
 
-    resume_set = set(resume_skills)
-
-    for jd_skill in jd_skills:
-
-        # Direct match
-        if jd_skill in resume_set:
-            matched.add(jd_skill)
-            continue
-
-        # Graph match
-        if jd_skill in skill_graph:
-            for rel in skill_graph[jd_skill]:
-                if rel in resume_set:
-                    matched.add(jd_skill)
-                    graph_matches[jd_skill] = rel
-                    break
-
-    return matched, graph_matches
-
-
-# -----------------------------
-# Final Scoring Function (VERY IMPORTANT)
-# -----------------------------
-def compute_final_score(transformer_score, matched, total_jd, graph_matches):
-
-    if total_jd == 0:
-        skill_score = 0
-    else:
-        skill_score = len(matched) / total_jd
-
-    graph_bonus = len(graph_matches) * 0.05
-
-    final_score = (
-        0.6 * transformer_score +
-        0.4 * skill_score +
-        graph_bonus
+    # -------- Tokenize --------
+    encoding = tokenizer(
+        resume_text,
+        jd_text,
+        truncation=True,
+        padding="max_length",
+        max_length=512,
+        return_tensors="pt"
     )
 
-    return min(final_score, 1.0), skill_score
+    input_ids = encoding["input_ids"].to(DEVICE)
+    attention_mask = encoding["attention_mask"].to(DEVICE)
+
+    # -------- Features --------
+    extra_features = compute_features(item, skill_dict, skill_graph)
+    extra_features = extra_features.unsqueeze(0).to(DEVICE)
+
+    # -------- Inference --------
+    with torch.no_grad():
+        logits = model(input_ids, attention_mask, extra_features)
+        probs = torch.softmax(logits, dim=1)
+
+        pred_class = torch.argmax(probs, dim=1).item()
+        confidence = probs[0][pred_class].item()
+
+    return pred_class, confidence
 
 
 # -----------------------------
-# Main Inference
+# Explainability
 # -----------------------------
+def explain(resume_text, jd_text, skill_dict):
+
+    resume_tech, resume_soft = extract_skills(resume_text, skill_dict)
+    jd_tech, jd_soft = extract_skills(jd_text, skill_dict)
+
+    # Convert to sets
+    resume_skills = set(resume_tech) | set(resume_soft)
+    jd_skills = set(jd_tech) | set(jd_soft)
+
+    matched = resume_skills & jd_skills
+    missing = jd_skills - matched
+
+    # 🔥 NEW (tech vs soft breakdown)
+    matched_tech = set(resume_tech) & set(jd_tech)
+    missing_tech = set(jd_tech) - set(resume_tech)
+
+    matched_soft = set(resume_soft) & set(jd_soft)
+    missing_soft = set(jd_soft) - set(resume_soft)
+
+    return {
+        "matched": list(matched),
+        "missing": list(missing),
+
+        # 🔥 NEW fields
+        "matched_tech": list(matched_tech),
+        "missing_tech": list(missing_tech),
+        "matched_soft": list(matched_soft),
+        "missing_soft": list(missing_soft),
+    }
+
+
+# -----------------------------
+# Class interpretation
+# -----------------------------
+def interpret_class(c):
+    mapping = {
+        0: "Poor Match",
+        1: "Average Match",
+        2: "Good Match",
+        3: "Excellent Match"
+    }
+    return mapping.get(c, "Unknown")
+
+
+# -----------------------------
+# Main runner (for testing)
+# -----------------------------
+#def run_inference(resume_text, jd_text):
 def run_inference(
     resume_text,
     jd_text,
-    matcher_model,
+    model,
     tokenizer,
     skill_dict,
-    skill_graph,
-    ner_model=None,
-    row_data=None
-):
+    skill_graph
+    ):
 
-    # -----------------------------
-    # Safety check
-    # -----------------------------
-    if not resume_text.strip() or not jd_text.strip():
-        return {"error": "Empty resume or JD"}
+    print("🔥 NEW VERSION OF run_inference LOADED 🔥")
+    #skill_dict = load_json("data/annotations/skill_dict.json")
+    #skill_graph = load_json("data/annotations/skill_graph.json")
 
-    # -----------------------------
-    # Skill Extraction
-    # -----------------------------
-    resume_tech, resume_soft = extract_skills(
-        resume_text, skill_dict, ner_model
-    )
+    #model, tokenizer = load_model(skill_dict, skill_graph)
 
-    jd_tech, jd_soft = extract_skills(
-        jd_text, skill_dict, ner_model
-    )
-
-    # Normalize + Deduplicate
-    resume_tech = list(set([normalize_skill(s) for s in resume_tech]))
-    jd_tech = list(set([normalize_skill(s) for s in jd_tech]))
-
-    # -----------------------------
-    # Structured Features
-    # -----------------------------
-    structured_features = {}
-    if row_data is not None:
-        structured_features = extract_structured_features(row_data)
-
-    # -----------------------------
-    # Transformer Matching
-    # -----------------------------
-    inputs = tokenizer(
+    pred, confidence = predict(
         resume_text,
         jd_text,
-        return_tensors="pt",
-        truncation=True,
-        padding=True,
-        max_length=512
+        model,
+        tokenizer,
+        skill_dict,
+        skill_graph
     )
 
-    with torch.no_grad():
-        outputs = matcher_model(**inputs)
-        probs = torch.softmax(outputs.logits, dim=1)
-        transformer_score = probs[0][1].item()
+    explanation = explain(resume_text, jd_text, skill_dict)
 
-    # -----------------------------
-    # Graph-based Matching
-    # -----------------------------
-    matched_set, graph_matches = graph_based_match(
-        jd_tech, resume_tech, skill_graph
-    )
-
-    missing_set = set(jd_tech) - matched_set
-
-    # -----------------------------
-    # Final Score
-    # -----------------------------
-    final_score, skill_score = compute_final_score(
-        transformer_score,
-        matched_set,
-        len(jd_tech),
-        graph_matches
-    )
-
-    # -----------------------------
-    # Generate Remarks
-    # -----------------------------
-    remark = generate_remark(
-    matched_set,
-    missing_set,
-    graph_matches
-    )
-
-    # -----------------------------
-    # Output
-    # -----------------------------
     return {
-        "match_score": round(final_score, 3),
-
-        "scores": {
-            "transformer": round(transformer_score, 3),
-            "skill_match": round(skill_score, 3)
-        },
-
-        "resume": {
-            "tech_skills": resume_tech,
-            "soft_skills": resume_soft
-        },
-
-        "jd": {
-            "tech_skills": jd_tech,
-            "soft_skills": jd_soft
-        },
-
-        "skill_analysis": {
-            "matched": list(matched_set),
-            "missing": list(missing_set),
-            "graph_matches": graph_matches,
-            "coverage": f"{len(matched_set)}/{len(jd_tech)}"
-        },
-
-        "remark" : remark,
-        
-        "features": structured_features
+        "prediction": interpret_class(pred),
+        "confidence": round(confidence, 3),
+        "matched_skills": explanation["matched"],
+        "missing_skills": explanation["missing"]
     }
-
-# -------------------------------------------
-#  Function to generate explainable Remarks
-# -------------------------------------------
-def generate_remark(matched, missing, graph_matches):
-
-    if len(matched) == 0:
-        return "Candidate does not match the job requirements."
-
-    remark = []
-
-    if len(matched) > 0:
-        remark.append(f"Matches {len(matched)} required skills")
-
-    if len(graph_matches) > 0:
-        gm = ", ".join([f"{k} via {v}" for k, v in graph_matches.items()])
-        remark.append(f"Indirect matches found ({gm})")
-
-    if len(missing) > 0:
-        miss = ", ".join(missing[:5])  # limit output
-        remark.append(f"Missing key skills: {miss}")
-
-    return ". ".join(remark)

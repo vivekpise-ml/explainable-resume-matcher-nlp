@@ -160,11 +160,31 @@ def create_pairs(data_dir, label_map):
         # -----------------------------
         # Read text (you must have read_file defined)
         # -----------------------------
+        '''
         try:
             jd_text = read_file(jd_path)
             resume_text = read_file(resume_path)
         except Exception as e:
             print(f"[ERROR] Reading file failed: {e}")
+            continue
+        '''
+        # -----------------------------
+        # Read text (you must have read_file defined)
+        # -----------------------------
+        try:
+            #print(f"[DEBUG] Attempting to read JD file: {jd_path}")
+            jd_text = read_file(jd_path)
+
+            #print(f"[DEBUG] Attempting to read Resume file: {resume_path}")
+            resume_text = read_file(resume_path)
+
+        except Exception as e:
+            print("\n[ERROR] Reading file failed:")
+            print(f"        JD Path     : {jd_path}")
+            print(f"        Resume Path : {resume_path}")
+            print(f"        Resume ID   : {resume_id}")
+            print(f"        JD ID       : {jd_id}")
+            print(f"        Error       : {e}\n")
             continue
 
         # -----------------------------

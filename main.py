@@ -1,80 +1,103 @@
-from src.data_loader import create_pairs
-from src.skill_extraction import load_skill_dict
-from src.inference import run_inference, load_ner_model, load_skill_graph
+"""
+=====================================================
+Main Entry Point - Resume ↔ JD Matching System
+=====================================================
 
-from transformers import AutoTokenizer, AutoModelForSequenceClassification
+This script performs end-to-end inference using:
+
+✔ Hybrid Model (BERT + Structured Features)
+✔ Dynamic Skill Extraction
+✔ Skill Graph-based Matching
+✔ Explainability (Matched & Missing Skills)
+
+-----------------------------------------------------
+Pipeline:
+-----------------------------------------------------
+1. Load skill dictionary & graph
+2. Load trained Hybrid Model
+3. Read Resume + JD
+4. Compute features (same as training)
+5. Predict match class (0–3)
+6. Provide explainability
+
+-----------------------------------------------------
+Output:
+-----------------------------------------------------
+- Match Category (Poor → Excellent)
+- Confidence Score
+- Matched Skills
+- Missing Skills
+
+=====================================================
+"""
+
+# -----------------------------
+# Imports
+# -----------------------------
+from src.inference import run_inference
+
+import os
 
 
 # -----------------------------
 # Config
 # -----------------------------
-data_dir = "data/raw"
-skill_dict_path = "data/annotations/skill_dict.json"
-skill_graph_path = "data/annotations/skill_graph.json"
-# model_name = "distilbert-base-uncased"
-model_path = "models/matcher_model"
-
-# -----------------------------
-# Step 1: Load data
-# -----------------------------
-pairs = create_pairs(data_dir)
-print("Total pairs:", len(pairs))
+RESUME_PATH = "sample_resume.txt"
+JD_PATH = "sample_jd.txt"
 
 
 # -----------------------------
-# Step 2: Load skill dictionary
+# Utility: Read text files
 # -----------------------------
-skill_dict = load_skill_dict(skill_dict_path)
+def read_text_file(path):
+    if not os.path.exists(path):
+        raise FileNotFoundError(f"File not found: {path}")
 
-
-# -----------------------------
-# Step 3: Load skill graph (NEW)
-# -----------------------------
-skill_graph = load_skill_graph(skill_graph_path)
-
-
-# -----------------------------
-# Step 4: Load NER model (optional)
-# -----------------------------
-ner_model = load_ner_model()
+    with open(path, "r", encoding="utf-8") as f:
+        return f.read()
 
 
 # -----------------------------
-# Step 5: Load transformer model
+# Main execution
 # -----------------------------
-# tokenizer = AutoTokenizer.from_pretrained(model_name)
-tokenizer = AutoTokenizer.from_pretrained(model_path)
-matcher_model = AutoModelForSequenceClassification.from_pretrained(
-    #model_name,
-    model_path,
-    num_labels=2
-)
+def main():
+
+    print("\n====================================")
+    print(" Resume ↔ JD Matching System ")
+    print("====================================\n")
+
+    # -----------------------------
+    # Step 1: Load input files
+    # -----------------------------
+    print("[INFO] Loading resume and job description...\n")
+
+    resume_text = read_text_file(RESUME_PATH)
+    jd_text = read_text_file(JD_PATH)
+
+    # -----------------------------
+    # Step 2: Run inference
+    # -----------------------------
+    print("[INFO] Running hybrid model inference...\n")
+
+    result = run_inference(resume_text, jd_text)
+
+    # -----------------------------
+    # Step 3: Display results
+    # -----------------------------
+    print("\n========== RESULT ==========\n")
+
+    print(f"Prediction      : {result['prediction']}")
+    print(f"Confidence      : {result['confidence']}")
+
+    print("\n--- Skill Analysis ---")
+    print(f"Matched Skills  : {result['matched_skills']}")
+    print(f"Missing Skills  : {result['missing_skills']}")
+
+    print("\n============================\n")
 
 
 # -----------------------------
-# Step 6: Run inference (sample)
+# Entry point
 # -----------------------------
-for i, pair in enumerate(pairs[:3]):
-
-    resume_text = pair["resume_text"]
-    jd_text = pair["jd_text"]
-
-    result = run_inference(
-        resume_text=resume_text,
-        jd_text=jd_text,
-        matcher_model=matcher_model,
-        tokenizer=tokenizer,
-        skill_dict=skill_dict,
-        skill_graph=skill_graph,
-        ner_model=ner_model,
-        row_data=None
-    )
-
-    print(f"\n--- Result {i+1} ---")
-    print("Match Score:", result["match_score"])
-
-    print("Matched Skills:", result["skill_analysis"]["matched"])
-    print("Missing Skills:", result["skill_analysis"]["missing"])
-
-    # OPTIONAL (VERY USEFUL DEBUG)
-    print("Graph Matches:", result["skill_analysis"].get("graph_matches", {}))
+if __name__ == "__main__":
+    main()

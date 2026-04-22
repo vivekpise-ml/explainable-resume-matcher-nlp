@@ -27,11 +27,60 @@ def extract_skills(text, skill_dict):
 
 
 # -----------------------------
-# Graph matching
+# Graph matching (legacy - kept)
 # -----------------------------
 def is_related(skill, resume_skills, skill_graph):
     related = skill_graph.get(skill, [])
     return any(rs in related for rs in resume_skills)
+
+
+# -----------------------------
+# Normalization (NEW - for future)
+# -----------------------------
+def normalize(s):
+    return s.lower().strip()
+
+
+# -----------------------------
+# Multi-hop graph traversal (kept for future)
+# -----------------------------
+def get_related_multi_hop(skill, skill_graph, max_depth=2):
+    skill = normalize(skill)
+
+    visited = set()
+    queue = [(skill, 0)]
+    hop_dict = {}
+
+    while queue:
+        node, depth = queue.pop(0)
+
+        if depth >= max_depth:
+            continue
+
+        for nei in skill_graph.get(node, []):
+            nei_norm = normalize(nei)
+
+            if nei_norm not in visited:
+                visited.add(nei_norm)
+                hop_dict[nei_norm] = depth + 1
+                queue.append((nei_norm, depth + 1))
+
+    return hop_dict
+
+# -----------------------------
+# Make graph bidirectional (NEW) - For future
+# -----------------------------
+def make_bidirectional(graph):
+    new_graph = dict(graph)
+
+    for k, vals in graph.items():
+        for v in vals:
+            if v not in new_graph:
+                new_graph[v] = []
+            if k not in new_graph[v]:
+                new_graph[v].append(k)
+
+    return new_graph
 
 
 # -----------------------------
@@ -47,7 +96,7 @@ def extract_experience(text):
 # -----------------------------
 def safe_value(val, fallback):
     if val is None or (isinstance(val, float) and math.isnan(val)):
-        return fallback, 1.0  # value, missing_flag
+        return fallback, 1.0
     return val, 0.0
 
 
@@ -69,21 +118,53 @@ def compute_features(item, skill_dict, skill_graph):
 
         exact = resume_skills & jd_skills
 
+        '''
         related = set()
         for s in jd_skills:
             if s not in exact and is_related(s, resume_skills, skill_graph):
                 related.add(s)
+        '''
+
+        # -----------------------------
+        # Multi-hop matching (controlled use)
+        # -----------------------------
+        related_1hop = set()
+        related_2hop = set()   # kept for future
+
+        for s in jd_skills:
+            if s in exact:
+                continue
+
+            # Only 1-hop logic is effectively used
+            neighbors = skill_graph.get(s, [])
+
+            for rs in resume_skills:
+                if rs in neighbors:
+                    related_1hop.add(s)
 
         exact_count = len(exact)
-        related_count = len(related)
+
+        related_1hop_count = len(related_1hop)
+
+        # 🔴 IMPORTANT: Only 1-hop used
+        related_count = related_1hop_count
 
         matched = exact_count + related_count
-        missing = required - matched
+
+        # ----------- WEIGHTED MATCH -----------
+        weighted_match = (
+            exact_count * 1.0 +
+            related_1hop_count * 0.7
+        )
+
+        missing = required - weighted_match
+        missing = max(missing, 0.0)
 
     else:
         resume_skills = set()
         jd_skills = set()
         exact_count = related_count = matched = missing = required = 0.0
+        weighted_match = 0.0
 
     # -----------------------------
     # CSV skills (clean handling)
@@ -91,17 +172,14 @@ def compute_features(item, skill_dict, skill_graph):
     if USE_CSV_FEATURES:
         raw_skill = item.get('skill_score')
         skill_missing = 1 if raw_skill is None else 0
-        skill_score = 0.0 if raw_skill is None else raw_skill / 100  # normalize
+        skill_score = 0.0 if raw_skill is None else raw_skill / 100
     else:
         skill_score = 0.0
         skill_missing = 1
 
     # -----------------------------
     # CSV features - qualification and experience
-    #-------------------------------
-    #exp_csv, exp_missing = safe_value(item.get('experience_score'), extract_experience(resume))
-    #qual_csv, qual_missing = safe_value(item.get('qualification_score'), 0.0)
-
+    # -----------------------------
     exp_csv = item.get('experience_score')
     exp_missing = 1 if exp_csv is None else 0
     exp_csv = 0.0 if exp_csv is None else exp_csv / 100
@@ -110,9 +188,6 @@ def compute_features(item, skill_dict, skill_graph):
     qual_missing = 1 if qual_csv is None else 0
     qual_csv = 0.0 if qual_csv is None else qual_csv / 100
 
-    # -----------------------------
-    # Optional weighting (simple static fallback)
-    # -----------------------------
     EXP_WEIGHT = 0.05
     QUAL_WEIGHT = 0.05
 
@@ -125,76 +200,52 @@ def compute_features(item, skill_dict, skill_graph):
 
         # ----------- CORE MATCH FEATURES -----------
         feature_dict["exact_ratio"] = exact_count / (required + 1e-5)
-        #feature_dict["exact_count_norm"] = exact_count / 10
 
         feature_dict["related_ratio"] = related_count / (required + 1e-5)
-        #feature_dict["related_count_norm"] = related_count / 10
 
         feature_dict["coverage_ratio"] = matched / (required + 1e-5)
-        #feature_dict["missing_ratio"] = missing / (required + 1e-5)
+
+        feature_dict["missing_ratio"] = missing / (required + 1e-5)
+
+        feature_dict["weighted_coverage"] = weighted_match / (required + 1e-5)
 
         # ----------- STRUCTURE FEATURES -----------
         feature_dict["resume_skill_count_norm"] = len(resume_skills) / 20
         feature_dict["jd_skill_count_norm"] = required / 20
 
-        
         ratio = exact_count / (related_count + 1e-5)
 
-        # log compression (key fix)
-        #feature_dict["exact_vs_related"] = math.log1p(ratio)/2.0
+        feature_dict["exact_vs_related"] = math.log1p(ratio) / 2.0
 
-        feature_dict["exact_vs_related"] = math.log1p(ratio)
-        
         feature_dict["match_density"] = matched / (len(resume_skills) + 1e-5)
 
-        '''
-        # ----------- STRONG MATCH COMPOSITE (NEW - SAFE)  This didnt work -----------
-        strong_match_score = (
-            0.5 * feature_dict["exact_ratio"] +
-            0.3 * feature_dict["coverage_ratio"] +
-            0.2 * feature_dict["match_density"]
-        )
-
-        feature_dict["strong_match_score"] = strong_match_score
-        '''
-
-        #feature_dict["jd_unmatched_pressure"] = missing / (required + 1e-5)
-
         feature_dict["balance_score"] = (
-            min(exact_count, related_count) / (max(exact_count, related_count) + 1e-5)
+            min(exact_count, related_count) /
+            (max(exact_count, related_count) + 1e-5)
         )
 
     else:
-        # fallback zeros
         for key in [
-            "exact_ratio", 
-            "related_ratio", 
-            "coverage_ratio", 
-            "resume_skill_count_norm", "jd_skill_count_norm",
-            "exact_vs_related", "match_density",
+            "exact_ratio",
+            "related_ratio",
+            "coverage_ratio",
+            "weighted_coverage",
+            "resume_skill_count_norm",
+            "jd_skill_count_norm",
+            "exact_vs_related",
+            "match_density",
             "balance_score"
         ]:
             feature_dict[key] = 0.0
-
 
     # -----------------------------
     # CSV features
     # -----------------------------
     if USE_CSV_FEATURES:
-
         feature_dict["skill_score"] = skill_score
         feature_dict["exp_score"] = exp_csv * EXP_WEIGHT
         feature_dict["qual_score"] = qual_csv * QUAL_WEIGHT
 
-    '''
-    else:
-        feature_dict["skill_score"] = 0.0
-        feature_dict["exp_score"] = 0.0
-        feature_dict["qual_score"] = 0.0
-    '''
-
-    if USE_CSV_FEATURES:
-        # Missing flags (VERY important) always include
         feature_dict["skill_missing"] = skill_missing
         feature_dict["exp_missing"] = exp_missing
         feature_dict["qual_missing"] = qual_missing
@@ -205,20 +256,10 @@ def compute_features(item, skill_dict, skill_graph):
     features = torch.tensor(list(feature_dict.values()), dtype=torch.float)
 
     # -----------------------------
-    # 🔥 NORMALIZATION (CRITICAL)
+    # NORMALIZATION
     # -----------------------------
-    #if features.numel() > 0:
-    #    features = (features - features.mean()) / (features.std() + 1e-6)
-
-    '''
-    # -----------------------------
-    #  DEBUG PRINT (BEST PART)
-    # -----------------------------
-    print("\n===== FEATURE DEBUG =====")
-    for k, v in feature_dict.items():
-        print(f"{k:25s}: {v}")
-    print("=========================\n")
-    '''
+    if features.numel() > 0:
+        features = (features - features.mean()) / (features.std() + 1e-6)
 
     return features
 
@@ -248,7 +289,11 @@ class ResumeJDDataset(Dataset):
             return_tensors='pt'
         )
 
-        extra_features = compute_features(item, self.skill_dict, self.skill_graph)
+        extra_features = compute_features(
+            item,
+            self.skill_dict,
+            self.skill_graph
+        )
 
         return {
             'input_ids': encoding['input_ids'].squeeze(),

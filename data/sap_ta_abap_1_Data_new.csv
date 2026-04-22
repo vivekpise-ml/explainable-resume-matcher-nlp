@@ -1,0 +1,266 @@
+Unnamed: 0,Unnamed: 1,Unnamed: 2,Unnamed: 3,Unnamed: 4,Unnamed: 5,Unnamed: 6,Unnamed: 7,Unnamed: 8,Unnamed: 9,Unnamed: 10,25,50,5,5.1,5.2,5.3,5.4,Unnamed: 18,Unnamed: 19,Unnamed: 20,Unnamed: 21,Unnamed: 22,Unnamed: 23,Unnamed: 24
+,,,,,,,,,,,Domain,Main Skill set,Soft skill,Min Years of Experience,Role,Qualification,Target Company,,"General Remark
+1. Target company is not applicable when field is blank, so I have given 100.
+2. What should we do if all match but candidate doesn't know english?  We need to think about it. Something should be main filter like language, country of applicant.",,,,,
+Sr. No.,JD title ( Folder Name),Domain,IT Skill set,Soft skill,Min Years of Experience,Role,Qualification,Target Company,Candidate Name,Resume Files,Domain Matching Score,Main Skill set Matching Score,Soft skill Matching Score,Min Years of Experience Matching Score,Role Matching Score,Qualification Matching Score,Target Company Matching Score,Matching Score,Remark,Language,Location_City,Location_Country,Average tenure per company,Contributor
+1,SAP_TA_ABAP_1,"Manufacturing, Industrial Machine","SAP ABAP, IDOC, RFC, BAPI, SAP interface","Team Player, Proactive, Good communication, Hardworking",5,"Technical Analyst, Developer",Bachelor of Engineering,,Candidate1_SAP_TA_ABAP_1,Candidate1_SAP_TA_ABAP_1,50,100,100,70,100,100,100,86,"1. Main skill based on integration and interface experience is not coming out and mainly.
+2. Soft skill is based on ""Stake holders' management, client escalation & engagement. Team management & handling ""
+3. Role is 100 as he has done lead role as it covers indiviaul contributor and pass experience details.
+4. Qualification is not given but it is assumed looking at present company and given 100",English,Pune,India,,Ashish Desai
+2,SAP_TA_ABAP_1,"Manufacturing, Industrial Machine","SAP ABAP, IDOC, RFC, BAPI, SAP interface","Team Player, Proactive, Good communication, Hardworking",5,"Technical Analyst, Developer",Bachelor of Engineering,,Candidate2_SAP_TA_ABAP_1,Candidate2_SAP_TA_ABAP_1,0,100,0,100,100,100,100,70,1. Main skill SAP CS is missing.,English,Pune,India,,Ashish Desai
+3,SAP_TA_ABAP_1,"Manufacturing, Industrial Machine","SAP ABAP, IDOC, RFC, BAPI, SAP interface","Team Player, Proactive, Good communication, Hardworking",5,"Technical Analyst, Developer",Bachelor of Engineering,,Candidate3_SAP_TA_ABAP_1,Candidate3_SAP_TA_ABAP_1,0,50,100,80,100,100,100,47,"1. SAP experience is less than 5 ( 3 years only).
+2. Missing SAP CS and lnterface experience. Very limited experience in developmenent.",English,Pune,India,,Ashish Desai
+4,SAP_TA_ABAP_1,"Manufacturing, Industrial Machine","SAP ABAP, IDOC, RFC, BAPI, SAP interface","Team Player, Proactive, Good communication, Hardworking",5,"Technical Analyst, Developer",Bachelor of Engineering,,Candidate4_SAP_TA_ABAP_1,Candidate4_SAP_TA_ABAP_1,50,75,100,100,100,100,100,74,1. This is not SAP functional consultant profie. He was worked on specific SAP integration technology that is not required for this project.,English,Pune,India,,Ashish Desai
+5,SAP_TA_ABAP_1,"Manufacturing, Industrial Machine","SAP ABAP, IDOC, RFC, BAPI, SAP interface","Team Player, Proactive, Good communication, Hardworking",5,"Technical Analyst, Developer",Bachelor of Engineering,,Candidate5_SAP_TA_ABAP_1,Candidate5_SAP_TA_ABAP_1,50,100,100,100,100,100,100,88,1. SAP CS and interface work is missing.,English,Pune,India,,
+6,SAP_TA_ABAP_1,"Manufacturing, Industrial Machine","SAP ABAP, IDOC, RFC, BAPI, SAP interface","Team Player, Proactive, Good communication, Hardworking",5,"Technical Analyst, Developer",Bachelor of Engineering,,Candidate6_SAP_TA_ABAP_1,Candidate6_SAP_TA_ABAP_1,0,100,100,100,100,100,100,75,1. SAP CS and interface work is missing.,English,Pune,India,,
+7,SAP_TA_ABAP_1,"Manufacturing, Industrial Machine","SAP ABAP, IDOC, RFC, BAPI, SAP interface","Team Player, Proactive, Good communication, Hardworking",5,"Technical Analyst, Developer",Bachelor of Engineering,,Candidate7_SAP_TA_ABAP_1,Candidate7_SAP_TA_ABAP_1,,,,,,100,100,,1. SAP CS and interface work is missing. Also Development work.,English,Pune,India,,
+8,SAP_TA_ABAP_1,"Manufacturing, Industrial Machine","SAP ABAP, IDOC, RFC, BAPI, SAP interface","Team Player, Proactive, Good communication, Hardworking",5,"Technical Analyst, Developer",Bachelor of Engineering,,Candidate8_SAP_TA_ABAP_1,Candidate8_SAP_TA_ABAP_1,100,100,100,100,100,100,100,100,"1. SAP CS and interface work is missing. Also Development work.
+2. Not sure on development guess based on worked on Johnson and Johnson. No mention of soft skill and qualification",English,Pune,India,,
+9,SAP_TA_ABAP_1,"Manufacturing, Industrial Machine","SAP ABAP, IDOC, RFC, BAPI, SAP interface","Team Player, Proactive, Good communication, Hardworking",5,"Technical Analyst, Developer",Bachelor of Engineering,,Candidate9_SAP_TA_ABAP_1,Candidate9_SAP_TA_ABAP_1,50,100,100,100,100,100,100,88,1. SAP CS and interface work is missing. Also Development work.,English,Pune,India,,
+10,SAP_TA_ABAP_1,"Manufacturing, Industrial Machine","SAP ABAP, IDOC, RFC, BAPI, SAP interface","Team Player, Proactive, Good communication, Hardworking",5,"Technical Analyst, Developer",Bachelor of Engineering,,Candidate10_SAP_TA_ABAP_1,Candidate10_SAP_TA_ABAP_1,100,100,100,100,100,100,100,100,"1. SAP CS and interface work is missing. Also Development work.
+2. Can't make out domain.
+3. Not much mention of softskill",English,Pune,India,,
+11,SAP_TA_ABAP_1,"Manufacturing, Industrial Machine","SAP ABAP, IDOC, RFC, BAPI, SAP interface","Team Player, Proactive, Good communication, Hardworking",5,"Technical Analyst, Developer",Bachelor of Engineering,,Candidate11_SAP_TA_ABAP_1,Candidate11_SAP_TA_ABAP_1,50,100,100,80,100,100,100,87,"1. SAP CS and interface work is missing. 
+2. Work on manufacturing project but not industrial.
+3. No mention of sofksill",English,Pune,India,,
+12,SAP_TA_ABAP_1,"Manufacturing, Industrial Machine","SAP ABAP, IDOC, RFC, BAPI, SAP interface","Team Player, Proactive, Good communication, Hardworking",5,"Technical Analyst, Developer",Bachelor of Engineering,,Candidate12_SAP_TA_ABAP_1,Candidate12_SAP_TA_ABAP_1,80,100,100,100,100,100,100,95,"1. Not relevant SAP functional skill set and not looked at domain.
+2. No mention of softskill",English,Pune,India,,
+13,SAP_TA_ABAP_1,"Manufacturing, Industrial Machine","SAP ABAP, IDOC, RFC, BAPI, SAP interface","Team Player, Proactive, Good communication, Hardworking",5,"Technical Analyst, Developer",Bachelor of Engineering,,Candidate13_SAP_TA_ABAP_1,Candidate13_SAP_TA_ABAP_1,0,100,100,100,80,100,100,73,"1. Not matching SAP skill set.
+2. Worked on Manufacturing company project.
+3.  Considered work only relevant for SAP development.",English,Pune,India,,
+14,SAP_TA_ABAP_1,"Manufacturing, Industrial Machine","SAP ABAP, IDOC, RFC, BAPI, SAP interface","Team Player, Proactive, Good communication, Hardworking",5,"Technical Analyst, Developer",Bachelor of Engineering,,Candidate14_SAP_TA_ABAP_1,Candidate14_SAP_TA_ABAP_1,0,100,100,100,100,100,100,75,1. SAP CS and interface work is missing. ,English,Pune,India,,
+15,SAP_TA_ABAP_1,"Manufacturing, Industrial Machine","SAP ABAP, IDOC, RFC, BAPI, SAP interface","Team Player, Proactive, Good communication, Hardworking",5,"Technical Analyst, Developer",Bachelor of Engineering,,Candidate15_SAP_TA_ABAP_1,Candidate15_SAP_TA_ABAP_1,100,100,100,75,100,100,100,99,"1. SAP CS and interface work is missing. Also Development work.
+2. Worked in Manufacturing and Maintenance engineer experience for domain 100
+3. No mention of softskill.",English,Pune,India,,
+16,SAP_TA_ABAP_1,"Manufacturing, Industrial Machine","SAP ABAP, IDOC, RFC, BAPI, SAP interface","Team Player, Proactive, Good communication, Hardworking",5,"Technical Analyst, Developer",Bachelor of Engineering,,Candidate16_SAP_TA_ABAP_1,Candidate16_SAP_TA_ABAP_1,80,100,100,75,85,100,100,92,"1. SAP CS and interface work is missing. Also Development work.
+2. Softskill score is 25 as only proactive is mentioned in some work. Not specified any softskill",English,Pune,India,,
+17,SAP_TA_ABAP_1,"Manufacturing, Industrial Machine","SAP ABAP, IDOC, RFC, BAPI, SAP interface","Team Player, Proactive, Good communication, Hardworking",5,"Technical Analyst, Developer",Bachelor of Engineering,,Candidate17_SAP_TA_ABAP_1,Candidate17_SAP_TA_ABAP_1,50,100,100,100,90,100,100,87,"1. SAP interface and development work is missing.
+2. file is in reviewed to be interviewed folder.",English,Pune,India,,
+18,SAP_TA_ABAP_1,"Manufacturing, Industrial Machine","SAP ABAP, IDOC, RFC, BAPI, SAP interface","Team Player, Proactive, Good communication, Hardworking",5,"Technical Analyst, Developer",Bachelor of Engineering,,Candidate18_SAP_TA_ABAP_1,Candidate18_SAP_TA_ABAP_1,0,100,100,100,100,100,100,75,"1. Only SAP interface experience is missing. Worked on SAP CS and development.
+2. No mention of soft skill so it is zero.
+3. Only 4 years of experience so it's score is 80.
+4. The file is in rejected after interview folder.",English,Pune,India,,
+19,SAP_TA_ABAP_1,"Manufacturing, Industrial Machine","SAP ABAP, IDOC, RFC, BAPI, SAP interface","Team Player, Proactive, Good communication, Hardworking",5,"Technical Analyst, Developer",Bachelor of Engineering,,Candidate19_SAP_TA_ABAP_1,Candidate19_SAP_TA_ABAP_1,0,100,100,100,100,100,100,75,"1. SAP CS  skill is missing but worked on SAP PM, Development and interface.
+2. No mention of softskill.",English,Pune,India,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate20_SAP_TA_ABAP_1,75,100,100,100,90,100,100,93,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate21_SAP_TA_ABAP_1,0,100,100,100,75,100,100,73,,,,,,Ashish Desai
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate22_SAP_TA_ABAP_1,0,100,100,100,100,100,100,75,,,,,,Ashish Desai
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate23_SAP_TA_ABAP_1,33,23,26,0,23,100,100,18,,,,,,Ashish Desai
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate24_SAP_TA_ABAP_1,20,8,18,25,8,100,100,12,,,,,,Ashish Desai
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate25_SAP_TA_ABAP_1,2,7,0,50,7,100,100,5,,,,,,Ashish Desai
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate26_SAP_TA_ABAP_1,4,10,3,0,10,100,100,9,,,,,,Ashish Desai
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate27_SAP_TA_ABAP_1,4,15,1,0,15,100,100,11,,,,,,Ashish Desai
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate28_SAP_TA_ABAP_1,43,19,25,50,19,100,100,23,,,,,,Ashish Desai
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate29_SAP_TA_ABAP_1,0,1,2,25,1,100,100,6,,,,,,Ashish Desai
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate30_SAP_TA_ABAP_1,24,18,29,75,18,100,100,15,,,,,,Ashish Desai
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate31_SAP_TA_ABAP_1,15,22,17,100,22,100,100,22,,,,,,Ashish Desai
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate32_SAP_TA_ABAP_1,40,23,34,100,23,100,100,21,,,,,,Ashish Desai
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate33_SAP_TA_ABAP_1,12,28,33,100,28,100,100,23,,,,,,Ashish Desai
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate34_SAP_TA_ABAP_1,37,27,22,50,27,100,100,24,,,,,,Ashish Desai
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate35_SAP_TA_ABAP_1,28,13,20,0,13,100,100,13,,,,,,Ashish Desai
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate36_SAP_TA_ABAP_1,15,23,31,0,23,100,100,18,,,,,,Ashish Desai
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate37_SAP_TA_ABAP_1,17,11,11,75,11,100,100,6,,,,,,Ashish Desai
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate38_SAP_TA_ABAP_1,24,12,5,25,12,100,100,16,,,,,,Ashish Desai
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate39_SAP_TA_ABAP_1,4,13,2,25,13,100,100,8,,,,,,Ashish Desai
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate40_SAP_TA_ABAP_1,13,18,29,25,18,100,100,21,,,,,,Ashish Desai
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate41_SAP_TA_ABAP_1,14,2,5,0,2,100,100,7,,,,,,Ashish Desai
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate42_SAP_TA_ABAP_1,22,8,6,25,8,100,100,9,,,,,,Ashish Desai
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate43_SAP_TA_ABAP_1,9,9,1,100,9,100,100,7,,,,,,Ashish Desai
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate44_SAP_TA_ABAP_1,36,21,30,0,21,100,100,18,,,,,,Ashish Desai
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate45_SAP_TA_ABAP_1,28,17,7,100,17,100,100,18,,,,,,Ashish Desai
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate46_SAP_TA_ABAP_1,23,6,3,50,6,100,100,5,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate47_SAP_TA_ABAP_1,15,17,28,100,17,100,100,15,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate48_SAP_TA_ABAP_1,34,39,40,25,39,100,100,40,,,,,,Vivek Pise
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate49_SAP_TA_ABAP_1,32,29,46,0,29,100,100,31,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate50_SAP_TA_ABAP_1,20,24,30,50,24,100,100,27,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate51_SAP_TA_ABAP_1,49,30,35,100,30,100,100,29,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate52_SAP_TA_ABAP_1,57,41,23,100,41,100,100,37,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate53_SAP_TA_ABAP_1,24,39,45,25,39,100,100,38,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate54_SAP_TA_ABAP_1,65,43,60,75,43,100,100,46,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate55_SAP_TA_ABAP_1,22,43,44,25,43,100,100,38,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate56_SAP_TA_ABAP_1,52,37,22,0,37,100,100,34,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate57_SAP_TA_ABAP_1,29,40,34,100,40,100,100,44,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate58_SAP_TA_ABAP_1,42,39,48,25,39,100,100,40,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate59_SAP_TA_ABAP_1,49,32,22,0,32,100,100,29,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate60_SAP_TA_ABAP_1,25,31,34,75,31,100,100,33,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate61_SAP_TA_ABAP_1,57,51,49,0,51,100,100,49,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate62_SAP_TA_ABAP_1,26,43,44,25,43,100,100,44,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate63_SAP_TA_ABAP_1,26,35,30,75,35,100,100,34,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate64_SAP_TA_ABAP_1,10,34,17,50,34,100,100,30,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate65_SAP_TA_ABAP_1,40,26,16,0,26,100,100,27,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate66_SAP_TA_ABAP_1,37,41,29,75,41,100,100,40,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate67_SAP_TA_ABAP_1,30,34,45,50,34,100,100,30,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate68_SAP_TA_ABAP_1,8,25,14,0,25,100,100,28,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate69_SAP_TA_ABAP_1,36,49,30,50,49,100,100,44,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate70_SAP_TA_ABAP_1,48,46,50,100,46,100,100,43,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate71_SAP_TA_ABAP_1,25,43,39,0,43,100,100,43,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate72_SAP_TA_ABAP_1,23,40,52,25,40,100,100,41,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate73_SAP_TA_ABAP_1,40,50,50,25,50,100,100,52,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate74_SAP_TA_ABAP_1,45,63,48,75,63,100,100,61,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate75_SAP_TA_ABAP_1,58,64,69,50,64,100,100,61,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate76_SAP_TA_ABAP_1,67,64,58,0,64,100,100,67,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate77_SAP_TA_ABAP_1,56,64,72,50,64,100,100,68,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate78_SAP_TA_ABAP_1,69,62,64,25,62,100,100,67,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate79_SAP_TA_ABAP_1,47,57,64,25,57,100,100,58,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate80_SAP_TA_ABAP_1,66,64,62,0,64,100,100,66,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate81_SAP_TA_ABAP_1,75,68,66,100,68,100,100,64,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate82_SAP_TA_ABAP_1,82,69,69,0,69,100,100,70,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate83_SAP_TA_ABAP_1,64,54,48,75,54,100,100,58,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate84_SAP_TA_ABAP_1,53,62,64,0,62,100,100,64,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate85_SAP_TA_ABAP_1,77,76,58,100,76,100,100,72,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate86_SAP_TA_ABAP_1,62,57,71,100,57,100,100,58,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate87_SAP_TA_ABAP_1,45,63,55,75,63,100,100,61,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate88_SAP_TA_ABAP_1,72,78,82,50,78,100,100,73,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate89_SAP_TA_ABAP_1,57,49,51,50,49,100,100,54,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate90_SAP_TA_ABAP_1,60,58,53,25,58,100,100,59,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate91_SAP_TA_ABAP_1,47,69,75,75,69,100,100,66,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate92_SAP_TA_ABAP_1,85,68,71,100,68,100,100,72,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate93_SAP_TA_ABAP_1,81,67,58,50,67,100,100,71,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate94_SAP_TA_ABAP_1,56,57,66,25,57,100,100,57,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate95_SAP_TA_ABAP_1,80,74,64,0,74,100,100,75,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate96_SAP_TA_ABAP_1,81,73,63,0,73,100,100,75,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate97_SAP_TA_ABAP_1,83,63,65,0,63,100,100,64,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate98_SAP_TA_ABAP_1,92,83,88,75,83,100,100,80,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate99_SAP_TA_ABAP_1,99,97,88,25,97,100,100,99,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate100_SAP_TA_ABAP_1,97,98,92,100,98,100,100,97,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate101_SAP_TA_ABAP_1,88,95,96,50,95,100,100,100,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate102_SAP_TA_ABAP_1,100,100,85,100,100,100,100,95,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate103_SAP_TA_ABAP_1,89,92,99,0,92,100,100,96,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate104_SAP_TA_ABAP_1,71,73,77,25,73,100,100,76,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate105_SAP_TA_ABAP_1,90,93,94,0,93,100,100,98,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate106_SAP_TA_ABAP_1,97,100,92,75,100,100,100,95,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate107_SAP_TA_ABAP_1,84,99,93,75,99,100,100,100,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate108_SAP_TA_ABAP_1,73,90,84,25,90,100,100,92,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate109_SAP_TA_ABAP_1,79,85,82,25,85,100,100,80,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate110_SAP_TA_ABAP_1,99,87,83,100,87,100,100,91,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate111_SAP_TA_ABAP_1,91,77,68,0,77,100,100,78,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate112_SAP_TA_ABAP_1,90,81,80,25,81,100,100,79,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate113_SAP_TA_ABAP_1,69,86,72,50,86,100,100,86,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate114_SAP_TA_ABAP_1,94,81,74,0,81,100,100,85,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate115_SAP_TA_ABAP_1,78,90,77,50,90,100,100,90,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate116_SAP_TA_ABAP_1,90,94,80,75,94,100,100,91,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate117_SAP_TA_ABAP_1,94,93,86,0,93,100,100,97,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate118_SAP_TA_ABAP_1,88,92,99,25,92,100,100,97,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate119_SAP_TA_ABAP_1,62,83,71,25,83,100,100,81,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate120_SAP_TA_ABAP_1,98,89,75,0,89,100,100,84,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate121_SAP_TA_ABAP_1,92,97,100,50,97,100,100,100,,,,,,
+,SAP_TA_ABAP_1,,,,,,Bachelor of Engineering,,,Candidate122_SAP_TA_ABAP_1,80,93,86,50,93,100,100,90,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate223_SAP_TA_ABAP_1,75,0,75,100,100,100,100,23,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate224_SAP_TA_ABAP_1,0,0,25,100,100,100,100,8,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate225_SAP_TA_ABAP_1,100,0,100,100,0,100,100,30,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate226_SAP_TA_ABAP_1,0,0,0,100,0,100,100,0,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate227_SAP_TA_ABAP_1,100,0,100,100,100,100,100,30,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate228_SAP_TA_ABAP_1,100,0,100,100,100,100,100,30,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate229_SAP_TA_ABAP_1,100,0,100,100,100,100,100,30,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate230_SAP_TA_ABAP_1,50,0,0,100,100,100,100,0,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate231_SAP_TA_ABAP_1,100,0,0,100,100,100,100,0,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate232_SAP_TA_ABAP_1,0,0,0,100,100,100,100,0,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate233_SAP_TA_ABAP_1,50,0,0,100,100,100,100,0,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate234_SAP_TA_ABAP_1,0,0,0,100,100,100,100,0,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate235_SAP_TA_ABAP_1,50,0,0,100,100,100,100,0,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate236_SAP_TA_ABAP_1,50,0,100,100,100,100,100,30,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate237_SAP_TA_ABAP_1,50,0,0,100,100,100,100,0,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate238_SAP_TA_ABAP_1,100,0,10,100,100,100,100,3,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate239_SAP_TA_ABAP_1,100,0,100,100,100,100,100,30,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate240_SAP_TA_ABAP_1,100,0,0,100,100,100,100,0,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate241_SAP_TA_ABAP_1,100,0,0,100,100,100,100,0,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate301_SAP_TA_ABAP_1,75,90,85,100,100,100,100,89,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate302_SAP_TA_ABAP_1,0,95,80,100,100,100,100,91,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate303_SAP_TA_ABAP_1,0,70,90,100,100,100,100,76,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate304_SAP_TA_ABAP_1,0,85,75,100,100,100,100,82,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate305_SAP_TA_ABAP_1,100,100,95,100,100,100,100,99,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate306_SAP_TA_ABAP_1,0,60,80,100,100,100,100,66,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate307_SAP_TA_ABAP_1,100,90,90,100,100,100,100,90,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate308_SAP_TA_ABAP_1,50,75,85,100,100,100,100,78,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate309_SAP_TA_ABAP_1,0,80,70,100,100,100,100,77,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate310_SAP_TA_ABAP_1,0,95,90,100,100,100,100,94,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate311_SAP_TA_ABAP_1,100,95,90,100,100,100,100,94,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate312_SAP_TA_ABAP_1,75,80,85,100,100,100,100,82,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate313_SAP_TA_ABAP_1,0,70,80,100,100,100,100,73,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate314_SAP_TA_ABAP_1,100,90,95,100,100,100,100,92,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate315_SAP_TA_ABAP_1,50,85,75,100,100,100,100,82,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate316_SAP_TA_ABAP_1,100,75,90,100,100,100,100,80,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate317_SAP_TA_ABAP_1,0,95,80,100,100,100,100,91,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate318_SAP_TA_ABAP_1,75,85,85,100,100,100,100,85,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate319_SAP_TA_ABAP_1,100,90,90,100,100,100,100,90,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate320_SAP_TA_ABAP_1,0,80,70,100,100,100,100,77,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate321_SAP_TA_ABAP_1,100,85,95,100,100,100,100,88,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate322_SAP_TA_ABAP_1,50,70,80,100,100,100,100,73,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate323_SAP_TA_ABAP_1,0,95,85,100,100,100,100,92,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate324_SAP_TA_ABAP_1,100,80,90,100,100,100,100,83,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate325_SAP_TA_ABAP_1,75,90,75,100,100,100,100,86,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate326_SAP_TA_ABAP_1,100,85,85,100,100,100,100,85,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate327_SAP_TA_ABAP_1,0,75,80,100,100,100,100,77,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate328_SAP_TA_ABAP_1,100,0,90,100,100,100,100,27,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate329_SAP_TA_ABAP_1,100,95,95,100,100,100,100,95,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate330_SAP_TA_ABAP_1,50,80,80,100,100,100,100,80,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate331_SAP_TA_ABAP_1,100,95,90,100,100,100,100,94,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate332_SAP_TA_ABAP_1,100,85,85,100,100,100,100,85,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate333_SAP_TA_ABAP_1,75,90,80,100,100,100,100,87,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate334_SAP_TA_ABAP_1,50,75,90,100,100,100,100,80,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate335_SAP_TA_ABAP_1,0,80,75,100,100,100,100,79,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate336_SAP_TA_ABAP_1,100,95,95,100,100,100,100,95,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate337_SAP_TA_ABAP_1,100,70,85,100,100,100,100,75,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate338_SAP_TA_ABAP_1,0,85,80,100,100,100,100,84,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate339_SAP_TA_ABAP_1,75,90,90,100,100,100,100,90,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate340_SAP_TA_ABAP_1,100,80,85,100,100,100,100,82,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate341_SAP_TA_ABAP_1,0,95,70,100,100,100,100,88,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate342_SAP_TA_ABAP_1,100,85,95,100,100,100,100,88,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate343_SAP_TA_ABAP_1,50,70,80,100,100,100,100,73,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate344_SAP_TA_ABAP_1,100,90,85,100,100,100,100,89,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate345_SAP_TA_ABAP_1,75,80,90,100,100,100,100,83,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate346_SAP_TA_ABAP_1,0,85,75,100,100,100,100,82,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate347_SAP_TA_ABAP_1,100,75,85,100,100,100,100,78,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate348_SAP_TA_ABAP_1,0,90,80,100,100,100,100,87,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate349_SAP_TA_ABAP_1,100,95,95,100,100,100,100,95,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate350_SAP_TA_ABAP_1,50,80,85,100,100,100,100,82,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate351_SAP_TA_ABAP_1,100,85,90,100,100,100,100,87,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate352_SAP_TA_ABAP_1,75,70,80,100,100,100,100,73,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate353_SAP_TA_ABAP_1,0,95,85,100,100,100,100,92,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate354_SAP_TA_ABAP_1,100,90,90,100,100,100,100,90,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate355_SAP_TA_ABAP_1,100,80,75,100,100,100,100,79,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate356_SAP_TA_ABAP_1,0,85,85,100,100,100,100,85,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate357_SAP_TA_ABAP_1,100,75,95,100,100,100,100,81,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate358_SAP_TA_ABAP_1,75,90,80,100,100,100,100,87,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate359_SAP_TA_ABAP_1,0,80,70,100,100,100,100,77,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate360_SAP_TA_ABAP_1,100,95,90,100,100,100,100,94,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate361_SAP_TA_ABAP_1,100,90,85,100,100,100,100,89,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate362_SAP_TA_ABAP_1,75,80,90,100,100,100,100,83,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate363_SAP_TA_ABAP_1,100,95,95,100,100,100,100,95,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate364_SAP_TA_ABAP_1,0,70,80,100,100,100,100,73,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate365_SAP_TA_ABAP_1,100,85,85,100,100,100,100,85,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate366_SAP_TA_ABAP_1,50,75,75,100,100,100,100,75,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate367_SAP_TA_ABAP_1,100,90,90,100,100,100,100,90,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate368_SAP_TA_ABAP_1,0,95,80,100,100,100,100,91,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate369_SAP_TA_ABAP_1,75,80,95,100,100,100,100,85,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate370_SAP_TA_ABAP_1,100,85,80,100,100,100,100,84,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate371_SAP_TA_ABAP_1,0,70,75,100,100,100,100,72,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate372_SAP_TA_ABAP_1,100,95,90,100,100,100,100,94,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate373_SAP_TA_ABAP_1,50,80,85,100,100,100,100,82,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate374_SAP_TA_ABAP_1,100,90,95,100,100,100,100,92,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate375_SAP_TA_ABAP_1,75,85,80,100,100,100,100,84,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate376_SAP_TA_ABAP_1,0,75,90,100,100,100,100,80,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate377_SAP_TA_ABAP_1,100,90,85,100,100,100,100,89,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate378_SAP_TA_ABAP_1,100,80,80,100,100,100,100,80,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate379_SAP_TA_ABAP_1,0,95,95,100,100,100,100,95,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate380_SAP_TA_ABAP_1,100,85,75,100,100,100,100,82,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate381_SAP_TA_ABAP_1,50,70,85,100,100,100,100,75,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate382_SAP_TA_ABAP_1,100,90,90,100,100,100,100,90,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate383_SAP_TA_ABAP_1,75,80,80,100,100,100,100,80,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate384_SAP_TA_ABAP_1,100,95,95,100,100,100,100,95,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate385_SAP_TA_ABAP_1,0,85,70,100,100,100,100,81,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate386_SAP_TA_ABAP_1,100,90,85,100,100,100,100,89,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate387_SAP_TA_ABAP_1,100,80,90,100,100,100,100,83,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate388_SAP_TA_ABAP_1,75,95,80,100,100,100,100,91,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate389_SAP_TA_ABAP_1,0,70,75,100,100,100,100,72,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate390_SAP_TA_ABAP_1,100,85,95,100,100,100,100,88,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate391_SAP_TA_ABAP_1,50,90,80,100,100,100,100,87,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate392_SAP_TA_ABAP_1,100,75,85,100,100,100,100,78,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate393_SAP_TA_ABAP_1,0,95,90,100,100,100,100,94,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate394_SAP_TA_ABAP_1,100,80,75,100,100,100,100,79,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate395_SAP_TA_ABAP_1,100,90,95,100,100,100,100,92,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate396_SAP_TA_ABAP_1,0,85,80,100,100,100,100,84,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate397_SAP_TA_ABAP_1,75,70,90,100,100,100,100,76,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate398_SAP_TA_ABAP_1,100,95,85,100,100,100,100,92,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate399_SAP_TA_ABAP_1,50,80,70,100,100,100,100,77,,,,,,
+,SAP_TA_ABAP_1,,,,,,,,,Candidate400_SAP_TA_ABAP_1,100,90,95,100,100,100,100,92,,,,,,
